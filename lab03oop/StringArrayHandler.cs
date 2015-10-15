@@ -10,6 +10,7 @@ namespace lab03oop {
 
         public StringArrayHandler() {
             Array = new[] { "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten" };
+            _range = new Tuple<int, int>(0, Array.Length - 1);
         }
 
         public StringArrayHandler(int startRange, int endRange) : this() {
@@ -57,7 +58,7 @@ namespace lab03oop {
             var firstArrayIterator = firstArray.GetEnumerator();
             var secondArrayiterator = secondArray.GetEnumerator();
 
-            for (int i = 0; i < mergeResult.Capacity; i++) {
+            for (var i = 0; i < mergeResult.Capacity; i++) {
                 if (i % 2 == 0) {
                     if (firstArrayIterator.MoveNext()) {
                         mergeResult.Add(firstArrayIterator.Current);
