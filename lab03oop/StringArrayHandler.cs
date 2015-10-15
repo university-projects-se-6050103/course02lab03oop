@@ -1,36 +1,37 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace lab03oop {
     public class StringArrayHandler {
 
-        private string[] _array;
+        public string[] Array { get; }
         private Tuple<int, int> _range;
 
         public StringArrayHandler() {
-            _array = new[] { "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten" };
+            Array = new[] { "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten" };
         }
 
         public StringArrayHandler(int startRange, int endRange) : this() {
             SetRange(startRange, endRange);
+            Array = Array.Skip(startRange).Take(endRange - startRange).ToArray();
         }
 
         public StringArrayHandler(string[] array) : this(0, array.Length - 1) {
-            _array = array;
-            Console.WriteLine(string.Join(",", _array));
+            Array = array;
         }
 
-        public int Length => _array.Length;
+        public int Length => Array.Length;
 
         public string this[int index] {
             get {
                 ThrowExceptionWhenRangeExceeded(index);
-                return _array[index];
+                return Array[index];
             }
 
             set {
                 ThrowExceptionWhenRangeExceeded(index);
-                _array[index] = value;
+                Array[index] = value;
             }
         }
 
@@ -49,28 +50,34 @@ namespace lab03oop {
         }
 
         public static StringArrayHandler operator +(StringArrayHandler obj1ArrayHandler, StringArrayHandler obj2ArrayHandler) {
-            var firstArray = obj1ArrayHandler._array;
-            var secondArray = obj2ArrayHandler._array;
-            var mergeResultArray = new string[firstArray.Length + secondArray.Length];
+            var firstArray = obj1ArrayHandler.Array.ToList();
+            var secondArray = obj2ArrayHandler.Array.ToList();
+            var mergeResult = new List<string>(firstArray.Count + secondArray.Count);
 
-            for (int i = 0, mergeArrayIndex = 0; i < mergeResultArray.Length; i++) {
+            var firstArrayIterator = firstArray.GetEnumerator();
+            var secondArrayiterator = secondArray.GetEnumerator();
+
+            for (int i = 0; i < mergeResult.Capacity; i++) {
                 if (i % 2 == 0) {
-                    mergeResultArray[i] = firstArray[mergeArrayIndex];
+                    if (firstArrayIterator.MoveNext()) {
+                        mergeResult.Add(firstArrayIterator.Current);
+                    }
                 } else {
-                    mergeResultArray[i] = secondArray[mergeArrayIndex];
-                    mergeArrayIndex++;
+                    if (secondArrayiterator.MoveNext()) {
+                        mergeResult.Add(secondArrayiterator.Current);
+                    }
                 }
             }
 
-            return new StringArrayHandler(mergeResultArray);
+            return new StringArrayHandler(mergeResult.ToArray());
         }
 
         public static StringArrayHandler operator %(StringArrayHandler obj1ArrayHandler, StringArrayHandler obj2ArrayHandler) {
-            return new StringArrayHandler(obj1ArrayHandler._array.Union(obj2ArrayHandler._array).ToArray());
+            return new StringArrayHandler(obj1ArrayHandler.Array.Union(obj2ArrayHandler.Array).ToArray());
         }
 
         public override string ToString() {
-            return string.Join(", ", _array);
+            return string.Join(", ", Array);
         }
     }
 }
