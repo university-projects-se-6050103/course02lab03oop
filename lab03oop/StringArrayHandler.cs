@@ -68,5 +68,9 @@ namespace lab03oop {
         public static StringArrayHandler operator %(StringArrayHandler obj1ArrayHandler, StringArrayHandler obj2ArrayHandler) {
             return new StringArrayHandler(obj1ArrayHandler._array.Union(obj2ArrayHandler._array).ToArray());
         }
+
+        public override string ToString() {
+            return string.Join(", ", _array);
+        }
     }
 }
