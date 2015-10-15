@@ -11,7 +11,7 @@ namespace lab03oop {
         }
 
         public StringArrayHandler(int startPosition, int endPosition) : this() {
-            _boundaries = new Tuple<int, int>(startPosition, endPosition);
+            SetBoundaries(startPosition, endPosition);
         }
 
         public int Length => _array.Length;
@@ -24,6 +24,13 @@ namespace lab03oop {
             set {
                 _array[index] = value;
             }
+        }
+
+        private void SetBoundaries(int startPosition, int endPosition) {
+            if (startPosition < 0 || endPosition >= Length) {
+                throw new IndexOutOfRangeException();
+            }
+            _boundaries = new Tuple<int, int>(startPosition, endPosition);
         }
     }
 }
