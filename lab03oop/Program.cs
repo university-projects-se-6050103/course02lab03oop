@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace lab03oop {
     class Program {
-        static void Main(string[] args) {
-
+        static void Main() {
+            var stringArrayHandler = new StringArrayHandler(0, 9);
+            Console.WriteLine(stringArrayHandler[2]);
         }
     }
 }

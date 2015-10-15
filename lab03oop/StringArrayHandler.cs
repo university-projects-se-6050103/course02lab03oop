@@ -7,7 +7,7 @@ namespace lab03oop {
         private Tuple<int, int> _boundaries;
 
         public StringArrayHandler() {
-            _array = new string[10];
+            _array = new []{"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"};
         }
 
         public StringArrayHandler(int startPosition, int endPosition) : this() {
