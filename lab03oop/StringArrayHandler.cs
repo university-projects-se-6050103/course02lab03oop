@@ -3,23 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace lab03oop {
-    public class StringArrayHandler {
+    public class StringArrayHandler
+    {
 
         public string[] Array { get; }
         private Tuple<int, int> _range;
 
         public StringArrayHandler() {
             Array = new[] { "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten" };
-            _range = new Tuple<int, int>(0, Array.Length - 1);
+            SetRange(0, Array.Length - 1);
         }
 
         public StringArrayHandler(int startRange, int endRange) : this() {
-            SetRange(startRange, endRange);
             Array = Array.Skip(startRange).Take(endRange - startRange).ToArray();
+            SetRange(startRange, endRange);
         }
 
-        public StringArrayHandler(string[] array) : this(0, array.Length - 1) {
+        public StringArrayHandler(string[] array) {
             Array = array;
+            SetRange(0, array.Length - 1);
         }
 
         public int Length => Array.Length;
