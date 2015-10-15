@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace lab03oop {
     public class StringArrayHandler {
@@ -12,6 +13,11 @@ namespace lab03oop {
 
         public StringArrayHandler(int startRange, int endRange) : this() {
             SetRange(startRange, endRange);
+        }
+
+        public StringArrayHandler(string[] array) : this(0, array.Length - 1) {
+            _array = array;
+            Console.WriteLine(string.Join(",", _array));
         }
 
         public int Length => _array.Length;
@@ -29,9 +35,6 @@ namespace lab03oop {
         }
 
         private void SetRange(int startRange, int endRange) {
-            if (startRange < 0 || endRange >= Length) {
-                throw new IndexOutOfRangeException();
-            }
             _range = new Tuple<int, int>(startRange, endRange);
         }
 
@@ -42,7 +45,24 @@ namespace lab03oop {
         }
 
         private bool IsIndexInRange(int index) {
-            return (_range.Item1 < 0 || _range.Item2 >= Length);
+            return (index >= _range.Item1 || index <= _range.Item2);
+        }
+
+        public static StringArrayHandler operator +(StringArrayHandler obj1ArrayHandler, StringArrayHandler obj2ArrayHandler) {
+            var firstArray = obj1ArrayHandler._array;
+            var secondArray = obj2ArrayHandler._array;
+            var mergeResultArray = new string[firstArray.Length + secondArray.Length];
+
+            for (int i = 0, mergeArrayIndex = 0; i < mergeResultArray.Length; i++) {
+                if (i % 2 == 0) {
+                    mergeResultArray[i] = firstArray[mergeArrayIndex];
+                } else {
+                    mergeResultArray[i] = secondArray[mergeArrayIndex];
+                    mergeArrayIndex++;
+                }
+            }
+
+            return new StringArrayHandler(mergeResultArray);
         }
     }
 }

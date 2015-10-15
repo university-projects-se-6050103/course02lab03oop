@@ -3,8 +3,10 @@
 namespace lab03oop {
     class Program {
         static void Main() {
-            var stringArrayHandler = new StringArrayHandler(0, 9);
-            Console.WriteLine(stringArrayHandler[12]);
+            var obj1 = new StringArrayHandler(0, 9);
+            var obj2 = new StringArrayHandler(0, 9);
+            var result = obj1 + obj2;
+            Console.WriteLine(result[2]);
         }
     }
 }
